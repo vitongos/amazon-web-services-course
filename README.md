@@ -9,7 +9,7 @@ Acceder a las instrucciones de los labs:
 5. [Networking and Content Delivery, Part 1](https://github.com/vitongos/amazon-web-services-course/blob/master/05.Networking.md)
 6. Networking and Content Delivery, Part 2
 7. Databases in AWS
-8. Applications Integration
+8. [Applications Integration](https://github.com/vitongos/amazon-web-services-course/blob/master/08.Integration.md)
 9. Monitoring and Deploying AWS Resources, Part 1
 10. Monitoring and Deploying AWS Resources, Part 2
 11. Scalability and DevOps in AWS
