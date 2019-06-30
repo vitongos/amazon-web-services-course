@@ -10,7 +10,7 @@ A real time sentiment analysis on tweets using Python, Flask-API, Gunicorn, Twee
 #!/bin/bash
 
 curl -O https://bootstrap.pypa.io/get-pip.py
-python get-pip.py 
+python get-pip.py
 
 yum install -y git
 amazon-linux-extras install postgresql10 vim epel -y

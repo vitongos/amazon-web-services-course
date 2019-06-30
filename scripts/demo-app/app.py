@@ -1,5 +1,6 @@
 import os
 import boto3
+import psycopg2
 from flask import Flask, request, render_template, jsonify
 from twitter import TwitterClient
 
@@ -42,8 +43,33 @@ def tweets():
         api.set_query(query)
 
         tweets = api.get_tweets()
+        store(tweets)
         return jsonify({'data': tweets, 'count': len(tweets)})
 
+
+def store(tweets):
+    try:
+        connection = psycopg2.connect(user=app.config['RDS_USER'],
+                                        password=app.config['RDS_PASSWORD'],
+                                        host=app.config['RDS_HOST'],
+                                        port=app.config['RDS_PORT'],
+                                        database=app.config['RDS_DATABASE'])
+        cursor = connection.cursor()
+        postgres_insert_query = """ INSERT INTO search (sentiment, message, user_name) VALUES (%s,%s,%s)"""
+        for record in tweets:
+            cursor.execute(postgres_insert_query, record)
+        connection.commit()
+        count = cursor.rowcount
+        print (count, "Record inserted successfully into search table")
+    except (Exception, psycopg2.Error) as error :
+        if(connection):
+            print("Failed to insert record into search table", error)
+    finally:
+        #closing database connection.
+        if(connection):
+            cursor.close()
+            connection.close()
+            print("PostgreSQL connection is closed")
 
 port = int(os.environ.get('PORT', 80))
 app.run(host="0.0.0.0", port=port, debug=False)
