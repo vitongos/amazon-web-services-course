@@ -12,12 +12,9 @@ app.config.from_envvar('CONFIG')
 def strtobool(v):
     return v.lower() in ["yes", "true", "t", "1"]
 
-
 @app.route('/')
 def index():
-
     return render_template('index.html')
-
 
 @app.route('/s3', methods = ['POST'])
 def s3():
@@ -46,7 +43,6 @@ def tweets():
         store(tweets)
         return jsonify({'data': tweets, 'count': len(tweets)})
 
-
 def store(tweets):
     connection = None
     try:
@@ -56,21 +52,20 @@ def store(tweets):
                                         port=app.config['RDS_PORT'],
                                         dbname=app.config['RDS_DATABASE'])
         cursor = connection.cursor()
-        postgres_insert_query = """ INSERT INTO search (sentiment, message, user_name) VALUES (%s,%s,%s)"""
+        postgres_insert_query = """ INSERT INTO search (sentiment, message, user_name) VALUES (%(sentiment)s,%(text)s,%(user)s)"""
         for record in tweets:
-            print(record)
+            app.logger.info(record)
             cursor.execute(postgres_insert_query, record)
         connection.commit()
-        count = cursor.rowcount
-        print(count, "Record inserted successfully into search table")
+        app.logger.info("Records inserted successfully into search table")
     except (Exception, psycopg2.Error) as error :
-        print("Failed to insert record into search table", error)
+        app.logger.error("Failed to insert record into search table", error)
     finally:
         #closing database connection.
         if(connection):
             cursor.close()
             connection.close()
-            print("PostgreSQL connection is closed")
+            app.logger.info("PostgreSQL connection is closed")
 
 port = int(os.environ.get('PORT', 80))
 app.run(host="0.0.0.0", port=port, debug=False)
