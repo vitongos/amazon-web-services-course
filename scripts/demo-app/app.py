@@ -1,13 +1,15 @@
 import os
 import boto3
 import psycopg2
+import logging
 from flask import Flask, request, render_template, jsonify
 from twitter import TwitterClient
 
 app = Flask(__name__)
-# Setup the client <query string, retweets_only bool, with_sentiment bool>
-api = TwitterClient('@gofornaman')
 app.config.from_envvar('CONFIG')
+logging.basicConfig(filename=app.config['LOG_FILE'], level=logging.DEBUG)
+
+api = TwitterClient('@gofornaman')
 
 def strtobool(v):
     return v.lower() in ["yes", "true", "t", "1"]
