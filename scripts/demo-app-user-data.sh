@@ -22,6 +22,7 @@ pip install six
 pip install textblob
 pip install tweepy --ignore-installed six requests
 pip install Werkzeug
+pip install boto3
 
 cd /var/www/demo
 git clone https://github.com/gofornaman/Real-Time-Sentiment-Analysis.git ./

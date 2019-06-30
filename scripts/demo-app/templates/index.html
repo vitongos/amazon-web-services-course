@@ -30,6 +30,8 @@
 				<input type="text" id="query">
 				<button id="search">Search</button>
 				<button id="getcsv">Download CSV</button>
+				<button id="stores3">Store in S3</button>
+				<button id="viewhistory">View history</button>
 				<div id="loading">Loading...</div>
 				<div id="container" style="min-width: 310px; height: 400px; max-width: 600px; margin: 0 auto"></div>
 				
@@ -105,7 +107,35 @@
 		  element.click();
 
 		  document.body.removeChild(element);
-		}
+        }
+        
+        function storeInS3(filename, text) {
+            $.ajax({
+			    url: 's3',
+			    data: {'file': filename, 'content': text},
+			    dataType: 'json',
+			    type: 'POST',
+			    success: function(data) {
+                    alert('CSV successfully uploaded to S3')
+			    	/*buildChart(data);
+			    	current_data = data['data'];
+			        var tweets = data['data'];
+			        var container = $('#tweets');
+			        var contents = '';
+			        contents+='<div>'
+			        
+			        for(i = 0; i < tweets.length; i++){
+			        	contents+= '<div class="panel '+ sentiment_to_color(tweets[i].sentiment) +'"> <div class="panel-heading"> <h3 class="panel-title">'+ tweets[i].user +'</h3> </div> <div class="panel-body"><blockquote>'+ tweets[i].text + '</blockquote> </div> </div>'
+                        // contents += '<li class="list-group-item '+ sentiment_to_color(tweets[i].sentiment) +'">'+ tweets[i].user + ": " + tweets[i].text + '</li>';
+			        }
+                    
+                    contents+='</div>';
+			        container.html(contents);
+			        $('#query').val(querystring);
+			        $('#loading').html(data['count'] + " Tweets loaded about "+ querystring +".");*/
+			    }
+			});
+        }
 
 		$(document).ready(function(){
 			load_tweets('Data Science');
@@ -118,8 +148,28 @@
 		});
 
 		$('#getcsv').click(function(){
-			download('data.csv', get_csv(current_data));
+			download(getHashName(), get_csv(current_data));
 		});
+
+		$('#stores3').click(function(){
+			storeInS3(getHashName(), get_csv(current_data));
+        });
+
+        function getHashName() {
+            return (new Date().toString() + 'data').hashCode() + '.csv';
+        }
+        
+        String.prototype.hashCode = function() {
+            var hash = 0, i, chr;
+            if (this.length === 0) return hash;
+            for (i = 0; i < this.length; i++) {
+              chr   = this.charCodeAt(i);
+              hash  = ((hash << 5) - hash) + chr;
+              hash |= 0; // Convert to 32bit integer
+            }
+            return hash;
+        };
+
 	function buildChart(data) {
     Highcharts.chart('container', {
         chart: {
