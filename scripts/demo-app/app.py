@@ -6,7 +6,7 @@ from twitter import TwitterClient
 app = Flask(__name__)
 # Setup the client <query string, retweets_only bool, with_sentiment bool>
 api = TwitterClient('@gofornaman')
-app.config.from_object('app.settings')
+app.config.from_envvar('CONFIG')
 
 def strtobool(v):
     return v.lower() in ["yes", "true", "t", "1"]
@@ -23,11 +23,11 @@ def s3():
     s3 = boto3.resource(
         's3',
         region_name='eu-west-1',
-        aws_access_key_id=ACCESS_KEY,
-        aws_secret_access_key=ACCESS_SECRET
+        aws_access_key_id=app.config['ACCESS_KEY'],
+        aws_secret_access_key=app.config['ACCESS_SECRET']
     )
-    bucket = S3_BUCKET
-    folder = S3_FOLDER
+    bucket = app.config['S3_BUCKET']
+    folder = app.config['S3_FOLDER']
     body = request.get_json()
     s3.Object(bucket, folder + '/' + body['file']).put(Body=body['content'])
 

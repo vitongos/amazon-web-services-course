@@ -29,4 +29,4 @@ git clone https://github.com/gofornaman/Real-Time-Sentiment-Analysis.git ./
 
 # Run app
 cd /var/www/demo
-FLASK_APP=app.py flask run --host=0.0.0.0 --port=80
+FLASK_APP=app.py CONFIG=app.settings flask run --host=0.0.0.0 --port=80
