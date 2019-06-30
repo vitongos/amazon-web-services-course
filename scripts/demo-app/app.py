@@ -48,6 +48,7 @@ def tweets():
 
 
 def store(tweets):
+    connection = None
     try:
         connection = psycopg2.connect(user=app.config['RDS_USER'],
                                         password=app.config['RDS_PASSWORD'],
