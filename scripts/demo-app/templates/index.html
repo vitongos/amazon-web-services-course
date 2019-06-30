@@ -112,8 +112,9 @@
         function storeInS3(filename, text) {
             $.ajax({
 			    url: 's3',
-			    data: {'file': filename, 'content': text},
-			    dataType: 'json',
+			    data: JSON.stringify({'file': filename, 'content': text}),
+                dataType: 'json',
+                contentType: 'application/json',
 			    type: 'POST',
 			    success: function(data) {
                     alert('CSV successfully uploaded to S3')
