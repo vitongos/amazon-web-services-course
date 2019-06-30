@@ -63,8 +63,7 @@ def store(tweets):
         count = cursor.rowcount
         print (count, "Record inserted successfully into search table")
     except (Exception, psycopg2.Error) as error :
-        if(connection):
-            print("Failed to insert record into search table", error)
+        print("Failed to insert record into search table", error)
     finally:
         #closing database connection.
         if(connection):
