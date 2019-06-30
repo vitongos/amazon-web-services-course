@@ -6,27 +6,11 @@ A real time sentiment analysis on tweets using Python, Flask-API, Gunicorn, Twee
 
 ## User data for EC2 provisioning
 
-```bash
-#!/bin/bash
-
-curl -O https://bootstrap.pypa.io/get-pip.py
-python get-pip.py
-
-yum install -y git
-amazon-linux-extras install postgresql10 vim epel -y
-
-mkdir -p /var/www/demo
-
-pip install -r requirements.txt
-
-cd /var/www/demo
-git clone https://github.com/vitongos/amazon-web-services-course /tmp/demo
-mv /tmp/demo/scripts/demo-app/* /var/www/demo/
-```
+Check user data [here](https://github.com/vitongos/amazon-web-services-course/blob/master/scripts/demo-app-user-data.sh)
 
 ## Launch application on port 80
 
 ```console
 root:~$ cd /var/www/demo
-root:~$ FLASK_APP=app.py flask run
+root:~$ FLASK_APP=app.py CONFIG=app.settings flask run
 ```
