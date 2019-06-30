@@ -20,7 +20,7 @@ def index():
 
 @app.route('/s3', methods = ['POST'])
 def s3():
-    s3 = boto3.resource(
+    s3 = boto3.client(
         's3',
         region_name='eu-west-1',
         aws_access_key_id=app.config['ACCESS_KEY'],
