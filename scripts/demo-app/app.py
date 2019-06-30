@@ -26,10 +26,10 @@ def s3():
         aws_access_key_id=app.config['ACCESS_KEY'],
         aws_secret_access_key=app.config['ACCESS_SECRET']
     )
-    return jsonify({'client': s3})
     bucket = app.config['S3_BUCKET']
     folder = app.config['S3_FOLDER']
     body = request.get_json()
+    return jsonify({'body': body})
     s3.put_object(bucket, folder + '/' + body['file'], body['content'])
 
 @app.route('/tweets')
