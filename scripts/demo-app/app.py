@@ -48,12 +48,12 @@ def tweets():
 
 
 def store(tweets):
-    try:
-        connection = psycopg2.connect(user=app.config['RDS_USER'],
+    connection = psycopg2.connect(user=app.config['RDS_USER'],
                                         password=app.config['RDS_PASSWORD'],
                                         host=app.config['RDS_HOST'],
                                         port=app.config['RDS_PORT'],
                                         database=app.config['RDS_DATABASE'])
+    try:
         cursor = connection.cursor()
         postgres_insert_query = """ INSERT INTO search (sentiment, message, user_name) VALUES (%s,%s,%s)"""
         for record in tweets:
