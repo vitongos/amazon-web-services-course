@@ -30,6 +30,7 @@ def s3():
     folder = app.config['S3_FOLDER']
     body = request.get_json()
     s3.put_object(Bucket=bucket, Key=folder + '/' + body['file'], Body=body['content'])
+    return jsonify({'result': 'OK'})
 
 @app.route('/tweets')
 def tweets():
