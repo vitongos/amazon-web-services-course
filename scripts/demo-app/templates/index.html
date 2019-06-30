@@ -31,7 +31,7 @@
 				<button id="search">Search</button>
 				<button id="getcsv">Download CSV</button>
 				<button id="stores3">Store in S3</button>
-				<button id="viewhistory">View history</button>
+				<button id="viewtotal">View total results</button>
 				<div id="loading">Loading...</div>
 				<div id="container" style="min-width: 310px; height: 400px; max-width: 600px; margin: 0 auto"></div>
 				
@@ -134,6 +134,16 @@
 
 		$('#getcsv').click(function(){
 			download(getHashName(), get_csv(current_data));
+		});
+
+		$('#viewtotal').click(function(){
+			$.ajax({
+			    url: 'total',
+			    type: 'GET',
+			    success: function(data) {
+                    alert('Tweets in database: ' + data.total)
+			    }
+			});
 		});
 
 		$('#stores3').click(function(){

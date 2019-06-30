@@ -45,6 +45,28 @@ def tweets():
         store(tweets)
         return jsonify({'data': tweets, 'count': len(tweets)})
 
+@app.route('/total')
+def tweets():
+    connection = None
+    try:
+        connection = psycopg2.connect(user=app.config['RDS_USER'],
+                                        password=app.config['RDS_PASSWORD'],
+                                        host=app.config['RDS_HOST'],
+                                        port=app.config['RDS_PORT'],
+                                        dbname=app.config['RDS_DATABASE'])
+        cursor = connection.cursor()
+        cursor.execute("SELECT COUNT(*) FROM search;")
+        total = cursor.fetchone()
+    except (Exception, psycopg2.Error) as error :
+        app.logger.error("Failed to load results", error)
+        return jsonify({'total': 'ERROR'})
+    finally:
+        if(connection):
+            cursor.close()
+            connection.close()
+            app.logger.info("PostgreSQL connection is closed")
+    return jsonify({'total': total})
+
 def store(tweets):
     connection = None
     try:
