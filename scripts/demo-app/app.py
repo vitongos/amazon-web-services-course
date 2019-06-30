@@ -63,7 +63,6 @@ def store(tweets):
     except (Exception, psycopg2.Error) as error :
         app.logger.error("Failed to insert record into search table", error)
     finally:
-        #closing database connection.
         if(connection):
             cursor.close()
             connection.close()

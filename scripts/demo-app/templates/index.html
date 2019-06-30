@@ -118,28 +118,12 @@
 			    type: 'POST',
 			    success: function(data) {
                     alert('CSV successfully uploaded to S3')
-			    	/*buildChart(data);
-			    	current_data = data['data'];
-			        var tweets = data['data'];
-			        var container = $('#tweets');
-			        var contents = '';
-			        contents+='<div>'
-			        
-			        for(i = 0; i < tweets.length; i++){
-			        	contents+= '<div class="panel '+ sentiment_to_color(tweets[i].sentiment) +'"> <div class="panel-heading"> <h3 class="panel-title">'+ tweets[i].user +'</h3> </div> <div class="panel-body"><blockquote>'+ tweets[i].text + '</blockquote> </div> </div>'
-                        // contents += '<li class="list-group-item '+ sentiment_to_color(tweets[i].sentiment) +'">'+ tweets[i].user + ": " + tweets[i].text + '</li>';
-			        }
-                    
-                    contents+='</div>';
-			        container.html(contents);
-			        $('#query').val(querystring);
-			        $('#loading').html(data['count'] + " Tweets loaded about "+ querystring +".");*/
 			    }
 			});
         }
 
 		$(document).ready(function(){
-			load_tweets('Data Science');
+			load_tweets('It\'s monday');
 		});
 
 		$('#search').click(function(){
