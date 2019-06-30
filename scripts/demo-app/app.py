@@ -58,10 +58,11 @@ def store(tweets):
         cursor = connection.cursor()
         postgres_insert_query = """ INSERT INTO search (sentiment, message, user_name) VALUES (%s,%s,%s)"""
         for record in tweets:
+            print(record)
             cursor.execute(postgres_insert_query, record)
         connection.commit()
         count = cursor.rowcount
-        print (count, "Record inserted successfully into search table")
+        print(count, "Record inserted successfully into search table")
     except (Exception, psycopg2.Error) as error :
         print("Failed to insert record into search table", error)
     finally:
