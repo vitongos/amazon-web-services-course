@@ -46,7 +46,7 @@ def tweets():
         return jsonify({'data': tweets, 'count': len(tweets)})
 
 @app.route('/total')
-def tweets():
+def total():
     connection = None
     try:
         connection = psycopg2.connect(user=app.config['RDS_USER'],
