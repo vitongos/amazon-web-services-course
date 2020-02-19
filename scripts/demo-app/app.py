@@ -22,7 +22,7 @@ def index():
 def s3():
     s3 = boto3.client(
         's3',
-        region_name='eu-west-1',
+        region_name=app.config['REGION'],
         aws_access_key_id=app.config['ACCESS_KEY'],
         aws_secret_access_key=app.config['ACCESS_SECRET']
     )
