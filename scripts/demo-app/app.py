@@ -9,6 +9,10 @@ app = Flask(__name__)
 app.config.from_envvar('CONFIG')
 logging.basicConfig(filename=app.config['LOG_FILE'], level=logging.DEBUG)
 
+# Leer parámetros de SSM:
+# ssm = boto3.client('ssm')
+# parameter = ssm.get_parameter(Name='/Prod/Db/Password', WithDecryption=True)
+
 api = TwitterClient('@gofornaman')
 
 def strtobool(v):
@@ -69,7 +73,7 @@ def total():
 
 def store(tweets):
     connection = None
-    try:
+    try:        
         connection = psycopg2.connect(user=app.config['RDS_USER'],
                                         password=app.config['RDS_PASSWORD'],
                                         host=app.config['RDS_HOST'],
